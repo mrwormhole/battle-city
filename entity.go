@@ -2,57 +2,56 @@ package main
 
 import (
 	"reflect"
-
-	"github.com/veandco/go-sdl2/sdl"
 )
 
-type direction byte
+var entities []*Entity
+
+type Direction byte
 
 const (
-	North direction = iota
-	East  direction = iota
-	South direction = iota
-	West  direction = iota
+	north Direction = iota
+	east  Direction = iota
+	south Direction = iota
+	west  Direction = iota
 )
 
-type vector2 struct {
+type Vector2 struct {
 	x, y float64
 }
 
-type component interface {
+type Component interface {
 	onUpdate() error
-	onDraw(renderer *sdl.Renderer) error
 }
 
-type entity struct {
-	position   vector2
-	rotation   direction
+type Entity struct {
+	position   Vector2
+	rotation   Direction
 	active     bool
 	tag        string
-	components []component
+	components []Component
 }
 
-func createEntity(tag string) *entity {
-	return &entity{tag: tag}
+func createEntity(tag string) *Entity {
+	return &Entity{active: true, tag: tag}
 }
 
-func (entity *entity) setEntityPosition(position vector2) {
+func (entity *Entity) setEntityPosition(position Vector2) {
 	entity.position = position
 }
 
-func (entity *entity) setEntityRotation(rotation direction) {
+func (entity *Entity) setEntityRotation(rotation Direction) {
 	entity.rotation = rotation
 }
 
-func (entity *entity) setActive(active bool) {
+func (entity *Entity) setActive(active bool) {
 	entity.active = active
 }
 
-func (entity *entity) setTag(tag string) {
+func (entity *Entity) setTag(tag string) {
 	entity.tag = tag
 }
 
-func (entity *entity) getComponent(component component) component {
+func (entity *Entity) getComponent(component Component) Component {
 	searchedType := reflect.TypeOf(component)
 	for _, existingComponent := range entity.components {
 		existingType := reflect.TypeOf(existingComponent)
@@ -64,16 +63,27 @@ func (entity *entity) getComponent(component component) component {
 	return nil
 }
 
-func (entity *entity) hasComponent(component component) bool {
+func (entity *Entity) hasComponent(component Component) bool {
 	if entity.getComponent(component) == nil {
 		return false
 	}
 	return true
 }
 
-func (entity *entity) addComponent(newComponent component) {
+func (entity *Entity) addComponent(newComponent Component) {
 	if entity.hasComponent(newComponent) {
 		return
 	}
 	entity.components = append(entity.components, newComponent)
+}
+
+func (entity *Entity) update() error {
+	for _, component := range entity.components {
+		err := component.onUpdate()
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

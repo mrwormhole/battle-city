@@ -18,6 +18,13 @@ func main() {
 	checkError("Renderer Initialization Error: ", err)
 	defer renderer.Destroy()
 
+	player := createEntity("player")
+	player.setEntityPosition(Vector2{x: SCREEN_WIDTH / 2.0, y: SCREEN_HEIGHT / 2.0})
+	player.addComponent(createSpriteComponent(player, renderer, "./assets/link_blue/walk_down/0.png"))
+	player.addComponent(createInputComponent(player, 0.01))
+	//input then
+	entities = append(entities, player)
+
 	for {
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch event.(type) {
@@ -27,6 +34,13 @@ func main() {
 		}
 		renderer.SetDrawColor(255, 255, 255, 255)
 		renderer.Clear()
+
+		for _, entity := range entities {
+			if entity.active {
+				err = entity.update()
+				checkError("Entity Updating Error! ", err)
+			}
+		}
 
 		renderer.Present()
 	}
