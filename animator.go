@@ -42,10 +42,9 @@ func (animator *Animator) loadTextures(animationName string, filenames []string)
 	animator.textures = textures
 }
 
-func (animator Animator) onUpdate() error {
+func (animator *Animator) onUpdate() error {
 	if animator.sprite.hasAnimator {
-		animator.mux.Lock()
-		animator.count += 2
+		animator.count += 1
 		fmt.Println(animator.count)
 		err := animator.renderer.CopyEx(animator.textures[animator.currentAnimationName][animator.count%13],
 			&sdl.Rect{X: 0, Y: 0, W: animator.sprite.width, H: animator.sprite.height},
@@ -57,7 +56,7 @@ func (animator Animator) onUpdate() error {
 			&sdl.Point{X: animator.sprite.width, Y: animator.sprite.height},
 			sdl.FLIP_NONE)
 		checkError("[Animator]Renderer Copy Error! ", err)
-		animator.mux.Unlock()
+
 	}
 
 	return nil
