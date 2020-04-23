@@ -43,6 +43,7 @@ func (animator *Animator) loadTextures(animationName string, filenames []string)
 
 func (animator *Animator) onUpdate() error {
 	if animator.sprite.hasAnimator {
+
 		animator.count += 1
 		err := animator.renderer.CopyEx(animator.textures[animator.currentAnimationName][animator.count%13],
 			&sdl.Rect{X: 0, Y: 0, W: animator.sprite.width, H: animator.sprite.height},

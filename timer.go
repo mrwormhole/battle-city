@@ -1,20 +1,32 @@
 package main
 
-import "time"
+import (
+	"fmt"
+
+	"github.com/veandco/go-sdl2/sdl"
+)
 
 type Timer struct {
-	time      time.Time
-	deltaTime float64
+	currentTime uint32
+	lastTime    uint32
+	delay       uint32
+	deltaTime   uint32
 }
 
-func createTimer() *Timer {
-	return &Timer{time: time.Now()}
+func createTimer(delay uint32) *Timer {
+	return &Timer{delay: delay}
 }
 
-func (timer *Timer) setTime() {
-	timer.time = time.Now()
+func (timer *Timer) start() {
+	timer.currentTime = sdl.GetTicks()
 }
 
-func (timer *Timer) setDeltaTime() {
-	timer.deltaTime = time.Since(timer.time).Seconds() * TARGET_FPS
+func (timer *Timer) tick() bool {
+	if timer.currentTime > timer.lastTime+timer.delay {
+		timer.deltaTime = timer.currentTime - (timer.lastTime + timer.delay)
+		fmt.Println(timer.deltaTime)
+		timer.lastTime = timer.currentTime
+		return true
+	}
+	return false
 }

@@ -6,6 +6,7 @@ import (
 
 const SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 const TARGET_FPS = 60
+const FRAME_DELAY = 1000 / TARGET_FPS
 
 var timer *Timer
 
@@ -26,7 +27,7 @@ func main() {
 	player.setEntityPosition(player_position)
 	player.addComponent(createSpriteComponent(player, renderer, "./assets/link_blue/walk_down/0.png"))
 	player.addComponent(createInputComponent(player, 5))
-	/*animatorComponent := createAnimatorComponent(player, renderer)
+	animatorComponent := createAnimatorComponent(player, renderer)
 	animatorComponent.loadTextures("walk_down", []string{
 		"./assets/link_blue/walk_down/0.png",
 		"./assets/link_blue/walk_down/1.png",
@@ -41,7 +42,7 @@ func main() {
 		"./assets/link_blue/walk_down/10.png",
 		"./assets/link_blue/walk_down/11.png",
 		"./assets/link_blue/walk_down/12.png"})
-	player.addComponent(animatorComponent)*/
+	player.addComponent(animatorComponent)
 	player.addComponent(createColliderComponent(player, renderer, player_position, 36, 44))
 
 	entities = append(entities, player)
@@ -53,9 +54,10 @@ func main() {
 
 	entities = append(entities, dummy)
 
-	timer = createTimer()
+	timer = createTimer(FRAME_DELAY)
+
 	for {
-		timer.setTime()
+		timer.start()
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
 			switch event.(type) {
 			case *sdl.QuitEvent:
@@ -63,17 +65,18 @@ func main() {
 			}
 
 		}
-		renderer.SetDrawColor(255, 255, 255, 255)
-		renderer.Clear()
+		if timer.tick() {
+			renderer.SetDrawColor(255, 255, 255, 255)
+			renderer.Clear()
 
-		for _, entity := range entities {
-			if entity.active {
-				err = entity.update()
-				checkError("Entity Updating Error! ", err)
+			for _, entity := range entities {
+				if entity.active {
+					err = entity.update()
+					checkError("Entity Updating Error! ", err)
+				}
 			}
-		}
 
-		renderer.Present()
-		timer.setDeltaTime()
+			renderer.Present()
+		}
 	}
 }
