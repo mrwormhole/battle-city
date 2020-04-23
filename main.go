@@ -22,10 +22,11 @@ func main() {
 	defer renderer.Destroy()
 
 	player := createEntity("player")
-	player.setEntityPosition(Vector2{x: SCREEN_WIDTH / 2.0, y: SCREEN_HEIGHT / 2.0})
+	player_position := Vector2{x: SCREEN_WIDTH / 2.0, y: SCREEN_HEIGHT / 2.0}
+	player.setEntityPosition(player_position)
 	player.addComponent(createSpriteComponent(player, renderer, "./assets/link_blue/walk_down/0.png"))
 	player.addComponent(createInputComponent(player, 5))
-	animatorComponent := createAnimatorComponent(player, renderer)
+	/*animatorComponent := createAnimatorComponent(player, renderer)
 	animatorComponent.loadTextures("walk_down", []string{
 		"./assets/link_blue/walk_down/0.png",
 		"./assets/link_blue/walk_down/1.png",
@@ -40,9 +41,17 @@ func main() {
 		"./assets/link_blue/walk_down/10.png",
 		"./assets/link_blue/walk_down/11.png",
 		"./assets/link_blue/walk_down/12.png"})
-	player.addComponent(animatorComponent)
+	player.addComponent(animatorComponent)*/
+	player.addComponent(createColliderComponent(player, renderer, player_position, 36, 44))
 
 	entities = append(entities, player)
+
+	dummy := createEntity("dummy")
+	dummy_position := Vector2{x: 300, y: 300}
+	dummy.setEntityPosition(dummy_position)
+	dummy.addComponent(createColliderComponent(dummy, renderer, dummy_position, 100, 100))
+
+	entities = append(entities, dummy)
 
 	timer = createTimer()
 	for {

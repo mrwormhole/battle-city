@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/veandco/go-sdl2/sdl"
@@ -45,7 +44,6 @@ func (animator *Animator) loadTextures(animationName string, filenames []string)
 func (animator *Animator) onUpdate() error {
 	if animator.sprite.hasAnimator {
 		animator.count += 1
-		fmt.Println(animator.count)
 		err := animator.renderer.CopyEx(animator.textures[animator.currentAnimationName][animator.count%13],
 			&sdl.Rect{X: 0, Y: 0, W: animator.sprite.width, H: animator.sprite.height},
 			&sdl.Rect{X: int32(animator.sprite.ownerEntity.position.x),
