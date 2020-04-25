@@ -10,6 +10,7 @@ type Sprite struct {
 	texture       *sdl.Texture
 	width, height int32
 	hasAnimator   bool
+	features      Features //features are for only components
 }
 
 func createSpriteComponent(entity *Entity, renderer *sdl.Renderer, filename string) *Sprite {
@@ -35,5 +36,9 @@ func (sprite Sprite) onUpdate() error {
 		checkError("[Sprite]Renderer Copy Error! ", err)
 	}
 
+	return nil
+}
+
+func (sprite Sprite) onDraw() error {
 	return nil
 }

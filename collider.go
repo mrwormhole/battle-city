@@ -11,6 +11,7 @@ type Collider struct {
 	renderer      *sdl.Renderer
 	position      Vector2
 	width, height float64
+	features      Features //features are for only components
 }
 
 func createColliderComponent(entity *Entity, renderer *sdl.Renderer, position Vector2, width float64, height float64) *Collider {
@@ -57,5 +58,9 @@ func (collider *Collider) onUpdate() error {
 
 	}
 
+	return nil
+}
+
+func (collider *Collider) onDraw() error {
 	return nil
 }

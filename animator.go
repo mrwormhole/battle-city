@@ -11,6 +11,7 @@ type Animator struct {
 	renderer    *sdl.Renderer
 	textures    map[string][]*sdl.Texture
 	sprite      *Sprite
+	features    Features
 
 	mux                  sync.Mutex
 	currentAnimationName string
@@ -58,5 +59,9 @@ func (animator *Animator) onUpdate() error {
 
 	}
 
+	return nil
+}
+
+func (animator *Animator) onDraw() error {
 	return nil
 }

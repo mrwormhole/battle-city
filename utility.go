@@ -20,6 +20,7 @@ func getTextureFromPNG(renderer *sdl.Renderer, filename string) *sdl.Texture {
 	image, err := img.LoadPNGRW(src)
 	checkError("Image Loading Error! ", err)
 	defer image.Free()
+	defer src.Close()
 
 	texture, err := renderer.CreateTextureFromSurface(image)
 	checkError("Texture Loading Error! ", err)

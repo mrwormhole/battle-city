@@ -7,6 +7,7 @@ import (
 type Input struct {
 	ownerEntity *Entity
 	speed       float64
+	features    Features
 }
 
 func createInputComponent(entity *Entity, speed float64) *Input {
@@ -27,5 +28,9 @@ func (input Input) onUpdate() error {
 		input.ownerEntity.position.y += input.speed
 	}
 
+	return nil
+}
+
+func (input Input) onDraw() error {
 	return nil
 }

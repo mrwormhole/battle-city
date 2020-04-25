@@ -19,8 +19,14 @@ type Vector2 struct {
 	x, y float64
 }
 
+type Features struct {
+	updateble bool
+	drawable  bool
+}
+
 type Component interface {
 	onUpdate() error
+	onDraw() error
 }
 
 type Entity struct {
