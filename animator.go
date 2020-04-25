@@ -65,3 +65,7 @@ func (animator *Animator) onUpdate() error {
 func (animator *Animator) onDraw() error {
 	return nil
 }
+
+func (animator Animator) getFeatures() Features {
+	return animator.features
+}

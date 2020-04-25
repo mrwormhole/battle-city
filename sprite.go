@@ -42,3 +42,7 @@ func (sprite Sprite) onUpdate() error {
 func (sprite Sprite) onDraw() error {
 	return nil
 }
+
+func (sprite Sprite) getFeatures() Features {
+	return sprite.features
+}

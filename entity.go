@@ -27,6 +27,7 @@ type Features struct {
 type Component interface {
 	onUpdate() error
 	onDraw() error
+	getFeatures() Features
 }
 
 type Entity struct {
@@ -69,6 +70,18 @@ func (entity *Entity) getComponent(component Component) Component {
 	return nil
 }
 
+func (entity *Entity) getComponentIndex(component Component) int {
+	searchedType := reflect.TypeOf(component)
+	for index, existingComponent := range entity.components {
+		existingType := reflect.TypeOf(existingComponent)
+		if existingType == searchedType {
+			return index
+		}
+	}
+
+	return -1
+}
+
 func (entity *Entity) hasComponent(component Component) bool {
 	if entity.getComponent(component) == nil {
 		return false
@@ -83,11 +96,37 @@ func (entity *Entity) addComponent(newComponent Component) {
 	entity.components = append(entity.components, newComponent)
 }
 
+func remove(components []Component, index int) []Component {
+	return append(components[:index], components[index+1:]...)
+}
+
+func (entity *Entity) removeComponent(component Component) {
+	if !entity.hasComponent(component) {
+		return
+	}
+	entity.components = remove(entity.components, entity.getComponentIndex(component))
+}
+
 func (entity *Entity) update() error {
 	for _, component := range entity.components {
-		err := component.onUpdate()
-		if err != nil {
-			return err
+		if component.getFeatures().updateble {
+			err := component.onUpdate()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func (entity *Entity) draw() error {
+	for _, component := range entity.components {
+		if component.getFeatures().drawable {
+			err := component.onDraw()
+			if err != nil {
+				return err
+			}
 		}
 	}
 

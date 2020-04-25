@@ -34,3 +34,7 @@ func (input Input) onUpdate() error {
 func (input Input) onDraw() error {
 	return nil
 }
+
+func (input Input) getFeatures() Features {
+	return input.features
+}

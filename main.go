@@ -73,6 +73,9 @@ func main() {
 				if entity.active {
 					err = entity.update()
 					checkError("Entity Updating Error! ", err)
+
+					err = entity.draw()
+					checkError("Entity Drawing Error! ", err)
 				}
 			}
 

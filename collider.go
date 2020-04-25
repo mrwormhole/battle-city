@@ -64,3 +64,7 @@ func (collider *Collider) onUpdate() error {
 func (collider *Collider) onDraw() error {
 	return nil
 }
+
+func (collider Collider) getFeatures() Features {
+	return collider.features
+}
