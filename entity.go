@@ -97,7 +97,9 @@ func (entity *Entity) addComponent(newComponent Component) {
 }
 
 func remove(components []Component, index int) []Component {
-	return append(components[:index], components[index+1:]...)
+	newSize := len(components) - 1
+	components[index] = components[newSize]
+	return components[:newSize]
 }
 
 func (entity *Entity) removeComponent(component Component) {
