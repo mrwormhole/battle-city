@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -22,7 +24,9 @@ func (timer *Timer) start() {
 func (timer *Timer) tick() bool {
 
 	if timer.currentTime > timer.lastTime+timer.delay {
-		timer.deltaTime = float64(timer.currentTime-(timer.lastTime+timer.delay)) / 1000.0
+		fmt.Println(timer.delay)
+		timer.deltaTime = float64(timer.currentTime-timer.lastTime) / 1000.0
+		fmt.Println(timer.deltaTime)
 		timer.lastTime = timer.currentTime
 		return true
 	}
