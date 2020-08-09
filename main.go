@@ -28,6 +28,8 @@ func main() {
 	player.addComponent(createSpriteComponent(player, renderer, "./assets/link_blue/walk_down/0.png"))
 	player.addComponent(createInputComponent(player, 5))
 	animatorComponent := createAnimatorComponent(player, renderer)
+	
+	// Change this approach to spritesheet cutting & storing. Because this takes more memory and not concurrent
 	animatorComponent.loadTextures("walk_down", []string{
 		"./assets/link_blue/walk_down/0.png",
 		"./assets/link_blue/walk_down/1.png",
