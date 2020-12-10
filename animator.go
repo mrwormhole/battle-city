@@ -1,7 +1,6 @@
 package main
 
-import (
-	"sync"
+/*import (
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -13,7 +12,6 @@ type Animator struct {
 	sprite      *Sprite
 	features    Features
 
-	mux                  sync.Mutex
 	currentAnimationName string
 	count                int
 }
@@ -68,4 +66,4 @@ func (animator *Animator) onDraw() error {
 
 func (animator Animator) getFeatures() Features {
 	return animator.features
-}
+}*/

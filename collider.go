@@ -1,9 +1,7 @@
 package main
 
-import (
+/*import (
 	"fmt"
-
-	"github.com/veandco/go-sdl2/sdl"
 )
 
 type Collider struct {
@@ -67,4 +65,4 @@ func (collider *Collider) onDraw() error {
 
 func (collider Collider) getFeatures() Features {
 	return collider.features
-}
+}*/

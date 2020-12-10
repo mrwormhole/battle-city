@@ -1,6 +1,6 @@
 package main
 
-import (
+/*import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -37,4 +37,4 @@ func (input Input) onDraw() error {
 
 func (input Input) getFeatures() Features {
 	return input.features
-}
+}*/

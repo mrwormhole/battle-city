@@ -1,10 +1,12 @@
 package main
 
-import (
-	"github.com/veandco/go-sdl2/sdl"
-)
+func main() {
+  //e := core.NewEntity(nil, false, "")
+  //e.G
+}
 
-const SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+
+/*const SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 const TARGET_FPS = 60
 const FRAME_DELAY = 1000 / TARGET_FPS
 
@@ -84,4 +86,4 @@ func main() {
 			renderer.Present()
 		}
 	}
-}
+}*/

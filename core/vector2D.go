@@ -1,0 +1,35 @@
+package core
+
+type Vector2D interface {
+	GetX() float64
+	GetY() float64
+	SetX(value float64)
+	SetY(value float64)
+}
+
+type vector2D struct {
+	x, y float64
+}
+
+func NewVector2D(x,y float64) Vector2D {
+	return &vector2D{
+		x: x,
+		y: y,
+	}
+}
+
+func (v *vector2D) GetX() float64 {
+	return v.x
+}
+
+func (v *vector2D) GetY() float64 {
+	return v.y
+}
+
+func (v *vector2D) SetX(value float64) {
+	v.x = value
+}
+
+func (v *vector2D) SetY(value float64) {
+	v.y = value
+}

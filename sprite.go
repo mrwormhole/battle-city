@@ -1,6 +1,6 @@
 package main
 
-import (
+/*import (
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -45,4 +45,4 @@ func (sprite Sprite) onDraw() error {
 
 func (sprite Sprite) getFeatures() Features {
 	return sprite.features
-}
+}*/
