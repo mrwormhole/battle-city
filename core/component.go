@@ -1,26 +1,31 @@
 package core
 
-import "github.com/mrwormhole/battle-city/enums"
-
 type Component interface {
 	OnUpdate() error
 	OnDraw() error
-	IsUpdatable() bool
-	IsDrawable() bool
-	ComponentType() enums.ComponentType
 }
 
-type ComponentFeatures struct {
-	componentType enums.ComponentType
+type ComponentAttributes interface {
+	IsUpdatable() bool
+	IsDrawable() bool
+}
+
+type componentAttributes struct {
 	updatable bool
 	drawable  bool
 }
 
-func NewComponentFeatures(componentType enums.ComponentType, updatable bool, drawable bool) *ComponentFeatures {
-	return &ComponentFeatures{
-		componentType: componentType,
+func (c componentAttributes) IsUpdatable() bool {
+	return c.updatable
+}
+
+func (c componentAttributes) IsDrawable() bool {
+	return c.drawable
+}
+
+func NewComponentAttributes(updatable bool, drawable bool) ComponentAttributes {
+	return &componentAttributes{
 		updatable:     updatable,
 		drawable:      drawable,
 	}
 }
-

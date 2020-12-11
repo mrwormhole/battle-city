@@ -1,8 +1,38 @@
 package main
 
+import (
+	"fmt"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+)
+
+type Game struct {}
+
+func (g *Game) Update() error {
+	return nil
+}
+
+func (g *Game) Draw(screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen,
+		fmt.Sprintf("FPS: %f \nTPS: %f",
+		ebiten.CurrentFPS(),
+		ebiten.CurrentTPS()))
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+	return 320,240
+}
+
 func main() {
-  //e := core.NewEntity(nil, false, "")
-  //e.G
+	//e := core.NewEntity(nil, false, "")
+	//e.G
+	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowTitle("title")
+	game := &Game{}
+
+	if err := ebiten.RunGame(game); err != nil {
+		panic(err)
+	}
 }
 
 
