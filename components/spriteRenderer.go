@@ -16,7 +16,7 @@ type SpriteRenderer struct {
 	sprite *ebiten.Image
 }
 
-func NewSpriteRenderer(ownerEntity *core.Entity,sourcePath string) *SpriteRenderer {
+func NewSpriteRenderer(ownerEntity *core.Entity, screen *ebiten.Image, sourcePath string) *SpriteRenderer {
 	sprite, _, err := ebitenutil.NewImageFromFile(sourcePath)
 	if err != nil {
 		log.Fatal(err)
@@ -35,9 +35,9 @@ func (spriteRenderer *SpriteRenderer) OnUpdate() error {
 	return nil
 }
 
-func (spriteRenderer *SpriteRenderer) OnDraw() error {
+func (spriteRenderer *SpriteRenderer) OnDraw(screen *ebiten.Image) error {
 	if spriteRenderer.componentAttributes.IsDrawable() {
-
+		screen.DrawImage(spriteRenderer.sprite, nil)
 	}
 	return nil
 }
