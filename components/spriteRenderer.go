@@ -16,7 +16,7 @@ type SpriteRenderer struct {
 	sprite *ebiten.Image
 }
 
-func NewSpriteRenderer(ownerEntity *core.Entity, screen *ebiten.Image, sourcePath string) *SpriteRenderer {
+func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRenderer {
 	sprite, _, err := ebitenutil.NewImageFromFile(sourcePath)
 	if err != nil {
 		log.Fatal(err)
