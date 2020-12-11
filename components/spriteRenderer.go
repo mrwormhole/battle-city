@@ -14,6 +14,7 @@ type SpriteRenderer struct {
 	componentAttributes core.ComponentAttributes
 	ownerEntity *core.Entity
 	sprite *ebiten.Image
+	options *ebiten.DrawImageOptions
 }
 
 func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRenderer {
@@ -25,6 +26,7 @@ func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRende
 		componentAttributes: core.NewComponentAttributes(true, true),
 		componentType: enums.SpriteRenderer,
 		ownerEntity: ownerEntity,
+		options: &ebiten.DrawImageOptions{},
 		sprite: sprite}
 }
 
@@ -37,7 +39,7 @@ func (spriteRenderer *SpriteRenderer) OnUpdate() error {
 
 func (spriteRenderer *SpriteRenderer) OnDraw(screen *ebiten.Image) error {
 	if spriteRenderer.componentAttributes.IsDrawable() {
-		screen.DrawImage(spriteRenderer.sprite, nil)
+		screen.DrawImage(spriteRenderer.sprite, spriteRenderer.options)
 	}
 	return nil
 }
