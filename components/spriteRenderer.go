@@ -23,23 +23,34 @@ func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRende
 		log.Fatal(err)
 	}
 	return &SpriteRenderer{
-		componentAttributes: core.NewComponentAttributes(true, true),
 		componentType: enums.SpriteRenderer,
+		componentAttributes: core.NewComponentAttributes(false, true),
 		ownerEntity: ownerEntity,
 		options: &ebiten.DrawImageOptions{},
 		sprite: sprite}
 }
 
 func (spriteRenderer *SpriteRenderer) OnUpdate() error {
-	if spriteRenderer.componentAttributes.IsUpdatable() {
-
-	}
 	return nil
 }
 
 func (spriteRenderer *SpriteRenderer) OnDraw(screen *ebiten.Image) error {
 	if spriteRenderer.componentAttributes.IsDrawable() {
+		x := spriteRenderer.ownerEntity.Velocity.GetX()
+		y := spriteRenderer.ownerEntity.Velocity.GetY()
+		spriteRenderer.options.GeoM.Translate(x,y)
+		spriteRenderer.ownerEntity.Position.SetX(spriteRenderer.options.GeoM.Element(0,2))
+		spriteRenderer.ownerEntity.Position.SetY(spriteRenderer.options.GeoM.Element(1,2))
+
 		screen.DrawImage(spriteRenderer.sprite, spriteRenderer.options)
 	}
 	return nil
+}
+
+func (spriteRenderer *SpriteRenderer) ComponentType() enums.ComponentType {
+	return spriteRenderer.componentType
+}
+
+func (spriteRenderer *SpriteRenderer) ComponentAttributes() core.ComponentAttributes {
+	return spriteRenderer.componentAttributes
 }

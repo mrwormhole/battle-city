@@ -2,18 +2,21 @@ package core
 
 import (
 	"fmt"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Entity struct {
 	Position   Vector2D
+	Velocity   Vector2D
 	isActive   bool
 	tag        string
 	components []Component
 }
 
-func NewEntity(Position Vector2D, isActive bool, tag string) *Entity {
+func NewEntity(Position Vector2D, Velocity Vector2D, isActive bool, tag string) *Entity {
 	return &Entity{
 		Position: Position,
+		Velocity: Velocity,
 		isActive: isActive,
 		tag: tag,
 	}
@@ -27,7 +30,6 @@ func (entity *Entity) GetComponent(component Component) Component {
 			return existingComponent
 		}
 	}
-
 	return nil
 }
 
@@ -39,7 +41,6 @@ func (entity *Entity) GetComponentIndex(component Component) int {
 			return index
 		}
 	}
-
 	return -1
 }
 
@@ -68,33 +69,30 @@ func (entity *Entity) DeleteComponent(component Component) error {
 	if !entity.HasComponent(component) {
 		return fmt.Errorf("The component that you are trying to remove from this entity doesn't exist!")
 	}
-
 	entity.components = removeComponentByIndex(entity.components, entity.GetComponentIndex(component))
 	return nil
 }
 
 func (entity *Entity) Update() error {
 	for _, component := range entity.components {
-		if component.IsUpdatable() {
-			err := component.OnDraw()
+		if component.ComponentAttributes().IsUpdatable() {
+			err := component.OnUpdate()
 			if err != nil {
 				return err
 			}
 		}
 	}
-
 	return nil
 }
 
-func (entity *Entity) Draw() error {
+func (entity *Entity) Draw(screen *ebiten.Image) error {
 	for _, component := range entity.components {
-		if component.IsDrawable() {
-			err := component.OnDraw()
+		if component.ComponentAttributes().IsDrawable() {
+			err := component.OnDraw(screen)
 			if err != nil {
 				return err
 			}
 		}
 	}
-
 	return nil
 }
