@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-//import cycle not allowed in test
 func TestAddEntity(t *testing.T) {
 	test := core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "test entity")
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
