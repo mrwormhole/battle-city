@@ -10,29 +10,47 @@ import (
 
 const SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
 
-var entity *core.Entity
+var player *core.Entity
+var dummy *core.Entity
 var spriteRenderer *components.SpriteRenderer
 var keyboardController *components.KeyboardController
+var boxCollider *components.BoxCollider
 
 type Game struct {}
 
 func NewGame() *Game {
-	entity = core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "player")
-	spriteRenderer = components.NewSpriteRenderer(entity, "./assets/sprites/tank_basic_up_c0_t1.png")
-	keyboardController = components.NewKeyboardController(entity)
-	err := entity.AddComponent(spriteRenderer)
+	player = core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "player")
+	spriteRenderer = components.NewSpriteRenderer(player, "./assets/sprites/tank_basic_up_c0_t1.png")
+	keyboardController = components.NewKeyboardController(player)
+	boxCollider = components.NewBoxCollider(player, 32,32)
+	err := player.AddComponent(spriteRenderer)
 	if err != nil {
 		panic(err)
 	}
-	err = entity.AddComponent(keyboardController)
+	err = player.AddComponent(keyboardController)
 	if err != nil {
 		panic(err)
 	}
+	err = player.AddComponent(boxCollider)
+	if err != nil {
+		panic(err)
+	}
+
+	dummy = core.NewEntity(core.NewVector2D(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), core.NewVector2D(0,0), true, "dummy")
+	boxCollider2 := components.NewBoxCollider(dummy, 32, 32)
+	err = dummy.AddComponent(boxCollider2)
+	if err != nil {
+		panic(err)
+	}
+
+	playerBoxCollider := player.GetComponent(boxCollider).(*components.BoxCollider)
+	playerBoxCollider.AddEntityToCollisionPool(dummy)
+
 	return &Game{}
 }
 
 func (g *Game) Update() error {
-	err := entity.Update()
+	err := player.Update()
 	if err != nil {
 		panic(err)
 	}
@@ -45,7 +63,12 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			ebiten.CurrentFPS(),
 			ebiten.CurrentTPS()))
 
-	err := entity.Draw(screen)
+	err := player.Draw(screen)
+	if err != nil {
+		panic(err)
+	}
+
+	err = dummy.Draw(screen)
 	if err != nil {
 		panic(err)
 	}

@@ -3,22 +3,23 @@ package core
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/mrwormhole/battle-city/enums"
 )
 
 type Entity struct {
 	Position   Vector2D
 	Velocity   Vector2D
-	isActive   bool
-	tag        string
+	IsActive   bool
+	Tag        string
 	components []Component
 }
 
-func NewEntity(Position Vector2D, Velocity Vector2D, isActive bool, tag string) *Entity {
+func NewEntity(Position Vector2D, Velocity Vector2D, IsActive bool, Tag string) *Entity {
 	return &Entity{
 		Position: Position,
 		Velocity: Velocity,
-		isActive: isActive,
-		tag: tag,
+		IsActive: IsActive,
+		Tag: Tag,
 	}
 }
 
@@ -27,6 +28,16 @@ func (entity *Entity) GetComponent(component Component) Component {
 	for _, existingComponent := range entity.components {
 		existingType := existingComponent.ComponentType()
 		if existingType == searchedType {
+			return existingComponent
+		}
+	}
+	return nil
+}
+
+// NOTE this may replace the top level function
+func (entity *Entity) GetComponentByComponentType(componentType enums.ComponentType) Component {
+	for _, existingComponent := range entity.components {
+		if existingComponent.ComponentType() == componentType {
 			return existingComponent
 		}
 	}
