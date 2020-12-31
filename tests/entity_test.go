@@ -7,25 +7,37 @@ import (
 	"testing"
 )
 
-func TestAddEntity(t *testing.T) {
+func TestAddToEntity(t *testing.T) {
 	test := core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "test entity")
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
-	_ = test.AddComponent(spriteRenderer)
+	err := test.AddComponent(spriteRenderer)
+	if err != nil {
+		t.Log("Component couldn't get added to the entity")
+		t.Fail()
+	}
 
 	if !test.HasComponent(enums.SpriteRenderer) {
-		t.Log("Component couldn't get added to the entity")
+		t.Log("Sprite renderer doesn't exist in the entity")
 		t.Fail()
 	}
 }
 
-func TestRemoveEntity(t *testing.T) {
+func TestAddAndRemoveFromEntity(t *testing.T) {
 	test := core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "test entity")
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
-	_ = test.AddComponent(spriteRenderer)
-	_ = test.DeleteComponent(spriteRenderer)
+	err := test.AddComponent(spriteRenderer)
+	if err != nil {
+		t.Log("Component couldn't get added to the entity")
+		t.Fail()
+	}
+	err = test.DeleteComponent(spriteRenderer)
+	if err != nil {
+		t.Log("Component couldn't get deleted from the entity")
+		t.Fail()
+	}
 
 	if test.HasComponent(enums.SpriteRenderer) {
-		t.Log("Component couldn't be removed from the entity")
+		t.Log("Sprite renderer exists in the entity")
 		t.Fail()
 	}
 }
