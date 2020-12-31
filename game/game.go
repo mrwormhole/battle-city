@@ -6,6 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/mrwormhole/battle-city/components"
 	"github.com/mrwormhole/battle-city/core"
+	"github.com/mrwormhole/battle-city/enums"
 )
 
 const SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
@@ -37,13 +38,13 @@ func NewGame() *Game {
 	}
 
 	dummy = core.NewEntity(core.NewVector2D(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), core.NewVector2D(0,0), true, "dummy")
-	boxCollider2 := components.NewBoxCollider(dummy, 32, 32)
-	err = dummy.AddComponent(boxCollider2)
+	lineCollider := components.NewLineCollider(dummy, dummy.Position, core.NewVector2D(dummy.Position.GetX() + 50, dummy.Position.GetY() + 50))
+	err = dummy.AddComponent(lineCollider)
 	if err != nil {
 		panic(err)
 	}
 
-	playerBoxCollider := player.GetComponent(boxCollider).(*components.BoxCollider)
+	playerBoxCollider := player.GetComponent(enums.BoxCollider).(*components.BoxCollider)
 	playerBoxCollider.AddEntityToCollisionPool(dummy)
 
 	return &Game{}

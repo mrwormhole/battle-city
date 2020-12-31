@@ -13,7 +13,7 @@ type BoxCollider struct {
 	componentType enums.ComponentType
 	componentAttributes core.ComponentAttributes
 	ownerEntity *core.Entity
-	entityCollisionPool []*core.Entity //TODO this can be only box colliders as a group instead of entities
+	entityCollisionPool []*core.Entity
 	position core.Vector2D
 	width float64
 	height float64
@@ -36,11 +36,16 @@ func (boxCollider *BoxCollider) OnUpdate() error {
 		boxCollider.position.SetY(boxCollider.ownerEntity.Position.GetY())
 
 		for _, otherEntity := range boxCollider.entityCollisionPool {
-			if otherEntity.IsActive &&
-				otherEntity.HasComponent(&BoxCollider{componentType: enums.BoxCollider}) &&
-				otherEntity.Tag == "dummy" {
-				if boxCollider.collides(otherEntity.GetComponent(&BoxCollider{componentType: enums.BoxCollider}).(*BoxCollider)) {
-					fmt.Println("TEST COLLISION")
+			if otherEntity.IsActive {
+				if otherEntity.HasComponent(enums.BoxCollider) && otherEntity.Tag == "dummy" {
+					if boxCollider.collidesWithBox(otherEntity.GetComponent(enums.BoxCollider).(*BoxCollider)) {
+						fmt.Println("[BOX-BOX]TEST COLLISION FROM BOX COLLIDER COMPONENT")
+					}
+				}
+				if otherEntity.HasComponent(enums.LineCollider) && otherEntity.Tag == "dummy" {
+					if otherEntity.GetComponent(enums.LineCollider).(*LineCollider).CollidesWithBox(boxCollider) {
+						fmt.Println("[BOX-LINE]TEST COLLISION FROM BOX COLLIDER COMPONENT")
+					}
 				}
 			}
 		}
@@ -73,7 +78,7 @@ func (boxCollider *BoxCollider) ComponentAttributes() core.ComponentAttributes {
 	return boxCollider.componentAttributes
 }
 
-func (boxCollider *BoxCollider) collides(otherBoxCollider *BoxCollider) bool {
+func (boxCollider *BoxCollider) collidesWithBox(otherBoxCollider *BoxCollider) bool {
 	if boxCollider.position.GetX() < otherBoxCollider.position.GetX() + otherBoxCollider.width &&
 		boxCollider.position.GetX() + boxCollider.width > otherBoxCollider.position.GetX() &&
 		boxCollider.position.GetY() < otherBoxCollider.position.GetY() + otherBoxCollider.height &&

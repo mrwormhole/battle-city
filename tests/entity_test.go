@@ -3,6 +3,7 @@ package tests
 import (
 	"github.com/mrwormhole/battle-city/components"
 	"github.com/mrwormhole/battle-city/core"
+	"github.com/mrwormhole/battle-city/enums"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func TestAddEntity(t *testing.T) {
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
 	_ = test.AddComponent(spriteRenderer)
 
-	if !test.HasComponent(spriteRenderer) {
+	if !test.HasComponent(enums.SpriteRenderer) {
 		t.Log("Component couldn't get added to the entity")
 		t.Fail()
 	}
@@ -23,7 +24,7 @@ func TestRemoveEntity(t *testing.T) {
 	_ = test.AddComponent(spriteRenderer)
 	_ = test.DeleteComponent(spriteRenderer)
 
-	if test.HasComponent(spriteRenderer) {
+	if test.HasComponent(enums.SpriteRenderer) {
 		t.Log("Component couldn't be removed from the entity")
 		t.Fail()
 	}

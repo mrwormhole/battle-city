@@ -23,19 +23,7 @@ func NewEntity(Position Vector2D, Velocity Vector2D, IsActive bool, Tag string) 
 	}
 }
 
-func (entity *Entity) GetComponent(component Component) Component {
-	searchedType := component.ComponentType()
-	for _, existingComponent := range entity.components {
-		existingType := existingComponent.ComponentType()
-		if existingType == searchedType {
-			return existingComponent
-		}
-	}
-	return nil
-}
-
-// NOTE this may replace the top level function
-func (entity *Entity) GetComponentByComponentType(componentType enums.ComponentType) Component {
+func (entity *Entity) GetComponent(componentType enums.ComponentType) Component {
 	for _, existingComponent := range entity.components {
 		if existingComponent.ComponentType() == componentType {
 			return existingComponent
@@ -44,26 +32,24 @@ func (entity *Entity) GetComponentByComponentType(componentType enums.ComponentT
 	return nil
 }
 
-func (entity *Entity) GetComponentIndex(component Component) int {
-	searchedType := component.ComponentType()
+func (entity *Entity) GetComponentIndex(componentType enums.ComponentType) int {
 	for index, existingComponent := range entity.components {
-		existingType := existingComponent.ComponentType()
-		if existingType == searchedType {
+		if existingComponent.ComponentType() == componentType {
 			return index
 		}
 	}
 	return -1
 }
 
-func (entity *Entity) HasComponent(component Component) bool {
-	if entity.GetComponent(component) == nil {
+func (entity *Entity) HasComponent(componentType enums.ComponentType) bool {
+	if entity.GetComponent(componentType) == nil {
 		return false
 	}
 	return true
 }
 
 func (entity *Entity) AddComponent(newComponent Component) error {
-	if entity.HasComponent(newComponent) {
+	if entity.HasComponent(newComponent.ComponentType()) {
 		return fmt.Errorf("The same component already exists in this entity!")
 	}
 	entity.components = append(entity.components, newComponent)
@@ -77,10 +63,10 @@ func removeComponentByIndex(components []Component, index int) []Component {
 }
 
 func (entity *Entity) DeleteComponent(component Component) error {
-	if !entity.HasComponent(component) {
+	if !entity.HasComponent(component.ComponentType()) {
 		return fmt.Errorf("The component that you are trying to remove from this entity doesn't exist!")
 	}
-	entity.components = removeComponentByIndex(entity.components, entity.GetComponentIndex(component))
+	entity.components = removeComponentByIndex(entity.components, entity.GetComponentIndex(component.ComponentType()))
 	return nil
 }
 
