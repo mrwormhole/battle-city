@@ -24,7 +24,7 @@ jobs:
           sudo apt-get install libasound2-dev libgl1-mesa-dev libalut-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev
       
     - name: Build
-      run: go build -o main .
+      run: env GOOS=windows GOARCH=amd64 go build -o main .
 
     - name: Test
-      run: go test -v ./...
+      run: go test ./tests
