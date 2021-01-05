@@ -22,9 +22,10 @@ jobs:
       run: |
           sudo apt-get update
           sudo apt-get install libasound2-dev libgl1-mesa-dev libalut-dev libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev libxxf86vm-dev
-      
+   
+    - name: Test
+      run: go test -v ./tests
+
     - name: Build
       run: env GOOS=windows GOARCH=amd64 go build -o main .
 
-    - name: Test
-      run: go test -v ./tests
