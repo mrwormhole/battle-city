@@ -24,8 +24,8 @@ type componentAttributes struct {
 
 func NewComponentAttributes(updatable bool, drawable bool) ComponentAttributes {
 	return &componentAttributes{
-		updatable:     updatable,
-		drawable:      drawable,
+		updatable: updatable,
+		drawable:  drawable,
 	}
 }
 

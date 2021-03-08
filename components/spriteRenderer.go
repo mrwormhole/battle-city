@@ -10,11 +10,11 @@ import (
 )
 
 type SpriteRenderer struct {
-	componentType enums.ComponentType
+	componentType       enums.ComponentType
 	componentAttributes core.ComponentAttributes
-	ownerEntity *core.Entity
-	sprite *ebiten.Image
-	options *ebiten.DrawImageOptions
+	ownerEntity         *core.Entity
+	sprite              *ebiten.Image
+	options             *ebiten.DrawImageOptions
 }
 
 func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRenderer {
@@ -23,11 +23,11 @@ func NewSpriteRenderer(ownerEntity *core.Entity, sourcePath string) *SpriteRende
 		log.Fatal(err)
 	}
 	return &SpriteRenderer{
-		componentType: enums.SpriteRenderer,
+		componentType:       enums.SpriteRenderer,
 		componentAttributes: core.NewComponentAttributes(false, true),
-		ownerEntity: ownerEntity,
-		options: &ebiten.DrawImageOptions{},
-		sprite: sprite}
+		ownerEntity:         ownerEntity,
+		options:             &ebiten.DrawImageOptions{},
+		sprite:              sprite}
 }
 
 func (spriteRenderer *SpriteRenderer) OnUpdate() error {
@@ -38,9 +38,9 @@ func (spriteRenderer *SpriteRenderer) OnDraw(screen *ebiten.Image) error {
 	if spriteRenderer.componentAttributes.IsDrawable() {
 		x := spriteRenderer.ownerEntity.Velocity.GetX()
 		y := spriteRenderer.ownerEntity.Velocity.GetY()
-		spriteRenderer.options.GeoM.Translate(x,y)
-		spriteRenderer.ownerEntity.Position.SetX(spriteRenderer.options.GeoM.Element(0,2))
-		spriteRenderer.ownerEntity.Position.SetY(spriteRenderer.options.GeoM.Element(1,2))
+		spriteRenderer.options.GeoM.Translate(x, y)
+		spriteRenderer.ownerEntity.Position.SetX(spriteRenderer.options.GeoM.Element(0, 2))
+		spriteRenderer.ownerEntity.Position.SetY(spriteRenderer.options.GeoM.Element(1, 2))
 
 		screen.DrawImage(spriteRenderer.sprite, spriteRenderer.options)
 	}

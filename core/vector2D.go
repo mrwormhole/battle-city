@@ -11,7 +11,7 @@ type vector2D struct {
 	x, y float64
 }
 
-func NewVector2D(x,y float64) Vector2D {
+func NewVector2D(x, y float64) Vector2D {
 	return &vector2D{
 		x: x,
 		y: y,

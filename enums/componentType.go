@@ -3,10 +3,10 @@ package enums
 type ComponentType int
 
 const (
-	SpriteRenderer ComponentType = iota
-	SpriteAnimator ComponentType = iota
-	BoxCollider ComponentType = iota
-	LineCollider ComponentType = iota
+	SpriteRenderer     ComponentType = iota
+	SpriteAnimator     ComponentType = iota
+	BoxCollider        ComponentType = iota
+	LineCollider       ComponentType = iota
 	KeyboardController ComponentType = iota
 )
 

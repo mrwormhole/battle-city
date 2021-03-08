@@ -7,9 +7,9 @@ import (
 )
 
 type KeyboardController struct {
-	componentType enums.ComponentType
+	componentType       enums.ComponentType
 	componentAttributes core.ComponentAttributes
-	ownerEntity *core.Entity
+	ownerEntity         *core.Entity
 }
 
 func NewKeyboardController(ownerEntity *core.Entity) *KeyboardController {

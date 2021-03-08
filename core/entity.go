@@ -19,7 +19,7 @@ func NewEntity(Position Vector2D, Velocity Vector2D, IsActive bool, Tag string) 
 		Position: Position,
 		Velocity: Velocity,
 		IsActive: IsActive,
-		Tag: Tag,
+		Tag:      Tag,
 	}
 }
 

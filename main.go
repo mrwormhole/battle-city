@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	ebiten.SetWindowSize(game.SCREEN_WIDTH * 2, game.SCREEN_HEIGHT * 2)
+	ebiten.SetWindowSize(game.SCREEN_WIDTH*2, game.SCREEN_HEIGHT*2)
 	ebiten.SetWindowTitle("Battle City")
 	g := game.NewGame()
 

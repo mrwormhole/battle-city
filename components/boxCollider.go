@@ -10,13 +10,13 @@ import (
 )
 
 type BoxCollider struct {
-	componentType enums.ComponentType
+	componentType       enums.ComponentType
 	componentAttributes core.ComponentAttributes
-	ownerEntity *core.Entity
+	ownerEntity         *core.Entity
 	entityCollisionPool []*core.Entity
-	position core.Vector2D
-	width float64
-	height float64
+	position            core.Vector2D
+	width               float64
+	height              float64
 }
 
 func NewBoxCollider(ownerEntity *core.Entity, width float64, height float64) *BoxCollider {
@@ -79,10 +79,10 @@ func (boxCollider *BoxCollider) ComponentAttributes() core.ComponentAttributes {
 }
 
 func (boxCollider *BoxCollider) collidesWithBox(otherBoxCollider *BoxCollider) bool {
-	if boxCollider.position.GetX() < otherBoxCollider.position.GetX() + otherBoxCollider.width &&
-		boxCollider.position.GetX() + boxCollider.width > otherBoxCollider.position.GetX() &&
-		boxCollider.position.GetY() < otherBoxCollider.position.GetY() + otherBoxCollider.height &&
-		boxCollider.position.GetY() + boxCollider.height > otherBoxCollider.position.GetY() {
+	if boxCollider.position.GetX() < otherBoxCollider.position.GetX()+otherBoxCollider.width &&
+		boxCollider.position.GetX()+boxCollider.width > otherBoxCollider.position.GetX() &&
+		boxCollider.position.GetY() < otherBoxCollider.position.GetY()+otherBoxCollider.height &&
+		boxCollider.position.GetY()+boxCollider.height > otherBoxCollider.position.GetY() {
 		return true
 	}
 	return false
