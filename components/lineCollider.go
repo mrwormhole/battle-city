@@ -30,7 +30,7 @@ func NewLineCollider(ownerEntity *core.Entity, startPosition core.Vector2D, endP
 
 func (lineCollider *LineCollider) OnUpdate() error {
 	if lineCollider.componentAttributes.IsUpdatable() {
-		uX := lineCollider.ownerEntity.Position.GetX() - lineCollider.startPosition.GetX()
+		uX := lineCollider.ownerEntity.Position.X() - lineCollider.startPosition.X()
 		uY := lineCollider.ownerEntity.Position.GetY() - lineCollider.startPosition.GetY()
 		lineCollider.startPosition.SetX(lineCollider.ownerEntity.Position.GetX())
 		lineCollider.startPosition.SetY(lineCollider.ownerEntity.Position.GetY())

@@ -45,7 +45,7 @@ func (spriteAnimator *SpriteAnimator) OnUpdate() error {
 
 func (spriteAnimator *SpriteAnimator) OnDraw(screen *ebiten.Image) error {
 	if spriteAnimator.componentAttributes.IsDrawable() && !spriteAnimator.ownerEntity.HasComponent(enums.SpriteRenderer) {
-		x := spriteAnimator.ownerEntity.Velocity.GetX()
+		x := spriteAnimator.ownerEntity.Velocity.X()
 		y := spriteAnimator.ownerEntity.Velocity.GetY()
 		spriteAnimator.options.GeoM.Translate(x, y)
 		spriteAnimator.ownerEntity.Position.SetX(spriteAnimator.options.GeoM.Element(0, 2))

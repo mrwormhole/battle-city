@@ -1,7 +1,7 @@
 package core
 
 type Vector2D interface {
-	GetX() float64
+	X() float64
 	GetY() float64
 	SetX(value float64)
 	SetY(value float64)
@@ -18,7 +18,7 @@ func NewVector2D(x, y float64) Vector2D {
 	}
 }
 
-func (v *vector2D) GetX() float64 {
+func (v *vector2D) X() float64 {
 	return v.x
 }
 

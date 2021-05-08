@@ -32,7 +32,7 @@ func NewBoxCollider(ownerEntity *core.Entity, width float64, height float64) *Bo
 
 func (boxCollider *BoxCollider) OnUpdate() error {
 	if boxCollider.componentAttributes.IsUpdatable() {
-		boxCollider.position.SetX(boxCollider.ownerEntity.Position.GetX())
+		boxCollider.position.SetX(boxCollider.ownerEntity.Position.X())
 		boxCollider.position.SetY(boxCollider.ownerEntity.Position.GetY())
 
 		for _, otherEntity := range boxCollider.entityCollisionPool {
@@ -56,7 +56,7 @@ func (boxCollider *BoxCollider) OnUpdate() error {
 func (boxCollider *BoxCollider) OnDraw(screen *ebiten.Image) error {
 	if boxCollider.componentAttributes.IsDrawable() {
 		ebitenutil.DrawRect(screen,
-			boxCollider.position.GetX(),
+			boxCollider.position.X(),
 			boxCollider.position.GetY(),
 			boxCollider.width,
 			boxCollider.height,
@@ -79,8 +79,8 @@ func (boxCollider *BoxCollider) ComponentAttributes() core.ComponentAttributes {
 }
 
 func (boxCollider *BoxCollider) collidesWithBox(otherBoxCollider *BoxCollider) bool {
-	if boxCollider.position.GetX() < otherBoxCollider.position.GetX()+otherBoxCollider.width &&
-		boxCollider.position.GetX()+boxCollider.width > otherBoxCollider.position.GetX() &&
+	if boxCollider.position.X() < otherBoxCollider.position.X()+otherBoxCollider.width &&
+		boxCollider.position.X()+boxCollider.width > otherBoxCollider.position.X() &&
 		boxCollider.position.GetY() < otherBoxCollider.position.GetY()+otherBoxCollider.height &&
 		boxCollider.position.GetY()+boxCollider.height > otherBoxCollider.position.GetY() {
 		return true
