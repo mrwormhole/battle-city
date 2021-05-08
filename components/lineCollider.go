@@ -31,11 +31,11 @@ func NewLineCollider(ownerEntity *core.Entity, startPosition core.Vector2D, endP
 func (lineCollider *LineCollider) OnUpdate() error {
 	if lineCollider.componentAttributes.IsUpdatable() {
 		uX := lineCollider.ownerEntity.Position.X() - lineCollider.startPosition.X()
-		uY := lineCollider.ownerEntity.Position.GetY() - lineCollider.startPosition.GetY()
-		lineCollider.startPosition.SetX(lineCollider.ownerEntity.Position.GetX())
-		lineCollider.startPosition.SetY(lineCollider.ownerEntity.Position.GetY())
-		lineCollider.endPosition.SetX(lineCollider.endPosition.GetX() + uX)
-		lineCollider.endPosition.SetY(lineCollider.endPosition.GetY() + uY)
+		uY := lineCollider.ownerEntity.Position.Y() - lineCollider.startPosition.Y()
+		lineCollider.startPosition.SetX(lineCollider.ownerEntity.Position.X())
+		lineCollider.startPosition.SetY(lineCollider.ownerEntity.Position.Y())
+		lineCollider.endPosition.SetX(lineCollider.endPosition.X() + uX)
+		lineCollider.endPosition.SetY(lineCollider.endPosition.Y() + uY)
 
 		for _, otherEntity := range lineCollider.entityCollisionPool {
 			if otherEntity.IsActive {
@@ -58,10 +58,10 @@ func (lineCollider *LineCollider) OnUpdate() error {
 func (lineCollider *LineCollider) OnDraw(screen *ebiten.Image) error {
 	if lineCollider.componentAttributes.IsDrawable() {
 		ebitenutil.DrawLine(screen,
-			lineCollider.startPosition.GetX(),
-			lineCollider.startPosition.GetY(),
-			lineCollider.endPosition.GetX(),
-			lineCollider.endPosition.GetY(),
+			lineCollider.startPosition.X(),
+			lineCollider.startPosition.Y(),
+			lineCollider.endPosition.X(),
+			lineCollider.endPosition.Y(),
 			color.RGBA{
 				R: 255,
 				G: 0,
@@ -81,23 +81,23 @@ func (lineCollider *LineCollider) ComponentAttributes() core.ComponentAttributes
 }
 
 func (lineCollider *LineCollider) collidesWithLine(otherLineCollider *LineCollider) bool {
-	uA := ((otherLineCollider.endPosition.GetX()-otherLineCollider.startPosition.GetX()) *
-		(lineCollider.startPosition.GetY() - otherLineCollider.startPosition.GetY()) -
-		(otherLineCollider.endPosition.GetY() - otherLineCollider.startPosition.GetY()) *
-		(lineCollider.startPosition.GetX() - otherLineCollider.startPosition.GetX())) /
-		((otherLineCollider.endPosition.GetY() - otherLineCollider.startPosition.GetY()) *
-		(lineCollider.endPosition.GetX() - lineCollider.startPosition.GetX()) -
-		(otherLineCollider.endPosition.GetX() - otherLineCollider.startPosition.GetX()) *
-		(lineCollider.endPosition.GetY()- lineCollider.startPosition.GetY()))
+	uA := ((otherLineCollider.endPosition.X()-otherLineCollider.startPosition.X()) *
+		(lineCollider.startPosition.Y() - otherLineCollider.startPosition.Y()) -
+		(otherLineCollider.endPosition.Y() - otherLineCollider.startPosition.Y()) *
+		(lineCollider.startPosition.X() - otherLineCollider.startPosition.X())) /
+		((otherLineCollider.endPosition.Y() - otherLineCollider.startPosition.Y()) *
+		(lineCollider.endPosition.X() - lineCollider.startPosition.X()) -
+		(otherLineCollider.endPosition.X() - otherLineCollider.startPosition.X()) *
+		(lineCollider.endPosition.Y()- lineCollider.startPosition.Y()))
 
-	uB := ((lineCollider.endPosition.GetX() - lineCollider.startPosition.GetX()) *
-		(lineCollider.startPosition.GetY() - otherLineCollider.startPosition.GetY()) -
-		(lineCollider.endPosition.GetY() - lineCollider.startPosition.GetY()) *
-		(lineCollider.startPosition.GetX() - otherLineCollider.startPosition.GetX())) /
-		((otherLineCollider.endPosition.GetY() - otherLineCollider.startPosition.GetY()) *
-		(lineCollider.endPosition.GetX() - lineCollider.startPosition.GetX()) -
-		(otherLineCollider.endPosition.GetX() - otherLineCollider.startPosition.GetX()) *
-		(lineCollider.endPosition.GetY() - lineCollider.startPosition.GetY()))
+	uB := ((lineCollider.endPosition.X() - lineCollider.startPosition.X()) *
+		(lineCollider.startPosition.Y() - otherLineCollider.startPosition.Y()) -
+		(lineCollider.endPosition.Y() - lineCollider.startPosition.Y()) *
+		(lineCollider.startPosition.X() - otherLineCollider.startPosition.X())) /
+		((otherLineCollider.endPosition.Y() - otherLineCollider.startPosition.Y()) *
+		(lineCollider.endPosition.X() - lineCollider.startPosition.X()) -
+		(otherLineCollider.endPosition.X() - otherLineCollider.startPosition.X()) *
+		(lineCollider.endPosition.Y() - lineCollider.startPosition.Y()))
 
 	if uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1 {
 		return true
@@ -107,20 +107,20 @@ func (lineCollider *LineCollider) collidesWithLine(otherLineCollider *LineCollid
 
 func (lineCollider *LineCollider) CollidesWithBox(otherBoxCollider *BoxCollider) bool {
 	left := lineCollider.collidesWithLine(&LineCollider{
-		startPosition: core.NewVector2D(otherBoxCollider.position.GetX(), otherBoxCollider.position.GetY()),
-		endPosition: core.NewVector2D(otherBoxCollider.position.GetX(), otherBoxCollider.position.GetY() + otherBoxCollider.height),
+		startPosition: core.NewVector2D(otherBoxCollider.position.X(), otherBoxCollider.position.Y()),
+		endPosition: core.NewVector2D(otherBoxCollider.position.X(), otherBoxCollider.position.Y() + otherBoxCollider.height),
 	})
 	right := lineCollider.collidesWithLine(&LineCollider{
-		startPosition: core.NewVector2D(otherBoxCollider.position.GetX() + otherBoxCollider.width, otherBoxCollider.position.GetY()),
-		endPosition: core.NewVector2D(otherBoxCollider.position.GetX() + otherBoxCollider.width, otherBoxCollider.position.GetY() + otherBoxCollider.height),
+		startPosition: core.NewVector2D(otherBoxCollider.position.X() + otherBoxCollider.width, otherBoxCollider.position.Y()),
+		endPosition: core.NewVector2D(otherBoxCollider.position.X() + otherBoxCollider.width, otherBoxCollider.position.Y() + otherBoxCollider.height),
 	})
 	top := lineCollider.collidesWithLine(&LineCollider{
-		startPosition: core.NewVector2D(otherBoxCollider.position.GetX(), otherBoxCollider.position.GetY()),
-		endPosition: core.NewVector2D(otherBoxCollider.position.GetX() + otherBoxCollider.width, otherBoxCollider.position.GetY()),
+		startPosition: core.NewVector2D(otherBoxCollider.position.X(), otherBoxCollider.position.Y()),
+		endPosition: core.NewVector2D(otherBoxCollider.position.X() + otherBoxCollider.width, otherBoxCollider.position.Y()),
 	})
 	bottom := lineCollider.collidesWithLine(&LineCollider{
-		startPosition: core.NewVector2D(otherBoxCollider.position.GetX(), otherBoxCollider.position.GetY() + otherBoxCollider.height),
-		endPosition: core.NewVector2D(otherBoxCollider.position.GetX() + otherBoxCollider.width, otherBoxCollider.position.GetY() + otherBoxCollider.height),
+		startPosition: core.NewVector2D(otherBoxCollider.position.X(), otherBoxCollider.position.Y() + otherBoxCollider.height),
+		endPosition: core.NewVector2D(otherBoxCollider.position.X() + otherBoxCollider.width, otherBoxCollider.position.Y() + otherBoxCollider.height),
 	})
 
 	if left || right || top || bottom {

@@ -14,12 +14,12 @@ type Entity struct {
 	components []Component
 }
 
-func NewEntity(Position Vector2D, Velocity Vector2D, IsActive bool, Tag string) *Entity {
+func NewEntity(position Vector2D, velocity Vector2D, isActive bool, tag string) *Entity {
 	return &Entity{
-		Position: Position,
-		Velocity: Velocity,
-		IsActive: IsActive,
-		Tag:      Tag,
+		Position: position,
+		Velocity: velocity,
+		IsActive: isActive,
+		Tag:      tag,
 	}
 }
 
@@ -62,7 +62,7 @@ func removeComponentByIndex(components []Component, index int) []Component {
 	return components[:newSize]
 }
 
-func (entity *Entity) DeleteComponent(component Component) error {
+func (entity *Entity) RemoveComponent(component Component) error {
 	if !entity.HasComponent(component.ComponentType()) {
 		return fmt.Errorf("The component that you are trying to remove from this entity doesn't exist!")
 	}

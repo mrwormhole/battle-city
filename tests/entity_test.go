@@ -7,6 +7,8 @@ import (
 	"testing"
 )
 
+//TODO: more tests need to be added for code cov
+
 func TestAddToEntity(t *testing.T) {
 	test := core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "test entity")
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
@@ -22,7 +24,7 @@ func TestAddToEntity(t *testing.T) {
 	}
 }
 
-func TestAddAndRemoveFromEntity(t *testing.T) {
+func TestRemoveFromEntity(t *testing.T) {
 	test := core.NewEntity(core.NewVector2D(0,0), core.NewVector2D(0,0), true, "test entity")
 	spriteRenderer := components.NewSpriteRenderer(test, "../assets/sprites/tank_basic_up_c0_t1.png")
 	err := test.AddComponent(spriteRenderer)
@@ -30,7 +32,7 @@ func TestAddAndRemoveFromEntity(t *testing.T) {
 		t.Log("Component couldn't get added to the entity")
 		t.Fail()
 	}
-	err = test.DeleteComponent(spriteRenderer)
+	err = test.RemoveComponent(spriteRenderer)
 	if err != nil {
 		t.Log("Component couldn't get deleted from the entity")
 		t.Fail()

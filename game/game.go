@@ -48,7 +48,7 @@ func NewGame() *Game {
 	}
 
 	dummy = core.NewEntity(core.NewVector2D(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), core.NewVector2D(0, 0), true, "dummy")
-	lineCollider := components.NewLineCollider(dummy, dummy.Position, core.NewVector2D(dummy.Position.X()+50, dummy.Position.GetY()+50))
+	lineCollider := components.NewLineCollider(dummy, dummy.Position, core.NewVector2D(dummy.Position.X()+50, dummy.Position.Y()+50))
 	err = dummy.AddComponent(lineCollider)
 	if err != nil {
 		panic(err)

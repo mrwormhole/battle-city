@@ -37,7 +37,7 @@ func (spriteRenderer *SpriteRenderer) OnUpdate() error {
 func (spriteRenderer *SpriteRenderer) OnDraw(screen *ebiten.Image) error {
 	if spriteRenderer.componentAttributes.IsDrawable() {
 		x := spriteRenderer.ownerEntity.Velocity.X()
-		y := spriteRenderer.ownerEntity.Velocity.GetY()
+		y := spriteRenderer.ownerEntity.Velocity.Y()
 		spriteRenderer.options.GeoM.Translate(x, y)
 		spriteRenderer.ownerEntity.Position.SetX(spriteRenderer.options.GeoM.Element(0, 2))
 		spriteRenderer.ownerEntity.Position.SetY(spriteRenderer.options.GeoM.Element(1, 2))
