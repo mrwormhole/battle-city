@@ -13,7 +13,7 @@ const SCREEN_WIDTH, SCREEN_HEIGHT = 320, 240
 
 var player *core.Entity
 var dummy *core.Entity
-var spriteRenderer *components.SpriteRenderer
+//var spriteRenderer *components.SpriteRenderer
 var spriteAnimator *components.SpriteAnimator
 var keyboardController *components.KeyboardController
 var boxCollider *components.BoxCollider
@@ -22,7 +22,7 @@ type Game struct{}
 
 func NewGame() *Game {
 	player = core.NewEntity(core.NewVector2D(0, 0), core.NewVector2D(0, 0), true, "player")
-	spriteRenderer = components.NewSpriteRenderer(player, "./assets/sprites/tank_basic_up_c0_t1.png")
+	//spriteRenderer = components.NewSpriteRenderer(player, "./assets/sprites/tank_basic_up_c0_t1.png")
 	spriteAnimator = components.NewSpriteAnimator(player, []string{"./assets/sprites/tank_basic_down_c0_t1.png",
 		"./assets/sprites/tank_basic_right_c0_t1.png",
 		"./assets/sprites/tank_basic_up_c0_t1.png",

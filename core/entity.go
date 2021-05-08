@@ -42,10 +42,7 @@ func (entity *Entity) GetComponentIndex(componentType enums.ComponentType) int {
 }
 
 func (entity *Entity) HasComponent(componentType enums.ComponentType) bool {
-	if entity.GetComponent(componentType) == nil {
-		return false
-	}
-	return true
+	return entity.GetComponent(componentType) != nil
 }
 
 func (entity *Entity) AddComponent(newComponent Component) error {
